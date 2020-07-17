@@ -1,0 +1,40 @@
+#Creating a docker container, and override the default command:
+docker create busybox ping google.com
+
+# Starting the docker container (defaults to not echo output)
+docker start <container id>
+docker start -a <container id> #Attaches output of container to terminal
+
+# Stopping the docker container
+docker stop <id> #waits 10 seconds for it to stop, then kills it.
+docker kill <id> #doesn't wait for it to stop
+
+# Show running containers
+docker ps
+docker ps -a #shows all containers including running or stopped
+
+# Change an existing container manually, and commit change to new image
+docker commit -c 'CMD ["redis-server"]' <container id>
+
+#Building a docker container:
+docker build -t shaggydog/simpleweb .
+docker build -t shaggydog/simpleweb:latest .
+
+#Running simpleweb with port forwarding:
+#(docker run includes docker create, and docker start, and defaults to echoing output to the terminal)
+docker run -p 8080:8080 shaggydog/simpleweb
+
+#Running the container and connecting with a shell:
+docker run -it shaggydog/simpleweb sh
+
+#Running containers with compose:
+docker-compose up
+docker-compose up --build   #rebuild the containers
+docker-compose up -d    #start in background
+
+# stopping all containers in docker-compose.yml file:
+docker-compose down
+
+# (run from the same directory as the docker-compose.yml) get status
+# of running containers in docker-compose.yml
+docker-compose ps
